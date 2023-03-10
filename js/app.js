@@ -15,32 +15,32 @@ function buildCharacter(data) {
     <div class="other">
         <h2>Movies with ${name}</h2>
         <div class="carousel-overlay">
-            <i class="fa-solid fa-chevron-left"></i>
-            <i class="fa-solid fa-chevron-right"></i>
+            <i class="fa-solid fa-chevron-left carousel-left"></i>
+            <i class="fa-solid fa-chevron-right carousel-right"></i>
         </div>
         <div id="movies" class="carousel">none</div>
         <h2>Series with ${name}</h2>
         <div class="carousel-overlay">
-        <i class="fa-solid fa-chevron-left"></i>
-        <i class="fa-solid fa-chevron-right"></i>
+        <i class="fa-solid fa-chevron-left carousel-left"></i>
+        <i class="fa-solid fa-chevron-right carousel-right"></i>
     </div>
         <div id="series" class="carousel">none</div>
         <h2>Short films with ${name}</h2>
         <div class="carousel-overlay">
-        <i class="fa-solid fa-chevron-left"></i>
-        <i class="fa-solid fa-chevron-right"></i>
+        <i class="fa-solid fa-chevron-left carousel-left"></i>
+        <i class="fa-solid fa-chevron-right carousel-right"></i>
     </div>
         <div id="short-films" class="carousel">none</div>
         <h2>park attractions with ${name}</h2>
         <div class="carousel-overlay">
-        <i class="fa-solid fa-chevron-left"></i>
-        <i class="fa-solid fa-chevron-right"></i>
+        <i class="fa-solid fa-chevron-left carousel-left"></i>
+        <i class="fa-solid fa-chevron-right carousel-right"></i>
     </div>
         <div id="park" class="carousel">none</div>
         <h2>video games with ${name}</h2>
         <div class="carousel-overlay">
-        <i class="fa-solid fa-chevron-left"></i>
-        <i class="fa-solid fa-chevron-right"></i>
+        <i class="fa-solid fa-chevron-left carousel-left"></i>
+        <i class="fa-solid fa-chevron-right carousel-right"></i>
     </div>
         <div id="games" class="carousel">none</div>
     </div>
@@ -146,7 +146,7 @@ async function search(api) {
 
     if(response.count > 1){
         app.innerHTML = `
-        <h1>Pick one</h1>
+        <h1>Which one where you looking for?</h1>
         <div id="choices"></div>
         `;
         const choices = document.getElementById('choices')
@@ -197,39 +197,57 @@ function fetchPage(pageNumber) {
         .then(res => res.json())
         .then(res => {
             app.innerHTML = `
-            <h1>Page ${pageNumber}</h1>
+            <h1>Disney characters</h1>
+            <div class="pages">
+            <i class="fa-solid fa-chevron-left previouse" ></i>
+            <div><span id="pageNumber">${pageNumber}</span> / 149</div>
+            <i class="fa-solid fa-chevron-right next" ></i>
+            </div>
             <ul id="choices"></ul>
             <div class="pages">
-            <i class="fa-solid fa-chevron-left" id="back"></i>
+            <i class="fa-solid fa-chevron-left previouse"></i>
             <div><span id="pageNumber">${pageNumber}</span> / 149</div>
-            <i class="fa-solid fa-chevron-right next" id="forward"></i>
+            <i class="fa-solid fa-chevron-right next"></i>
             </div>
 
             `;
 
-            const back = document.getElementById('back')
-            const forward = document.getElementById('forward');
+            const back = document.querySelectorAll('.previouse')
+            const forward = document.querySelectorAll('.next');
             switch(pageNumber){
                 
                 case 1:
-                    back.classList.add('deactivated')
-                    forward.addEventListener('click', () => {
-                        nextPage()
-                    })
+                    back.forEach(element => {
+                        element.classList.add('deactivated')
+                    });
+                    forward.forEach(element => {
+                        element.addEventListener('click', () => {
+                            nextPage()
+                        })
+                    });
+                    
                     break;
                 case 149:
-                    forward.classList.add('deactivated');
-                    back.addEventListener('click', () => {
-                        previousePage()
-                    })
+                    forward.forEach(element => {
+                        element.classList.add('deactivated')
+                    });
+                    back.forEach(element => {
+                        element.addEventListener('click', () => {
+                            previousePage()
+                        })
+                    });
                     break;
                 default:
-                    back.addEventListener('click', () => {
-                        previousePage()
-                    })
-                    forward.addEventListener('click', () => {
-                        nextPage()
-                    })
+                    back.forEach(element => {
+                        element.addEventListener('click', () => {
+                            previousePage()
+                        })
+                    });
+                    forward.forEach(element => {
+                        element.addEventListener('click', () => {
+                            nextPage()
+                        })
+                    });
                     break
             }
 

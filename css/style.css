@@ -44,7 +44,7 @@ nav form input{
     color: #40414C;
     font-family: 'Poppins', sans-serif;
     font-size: 1.6rem;   
-    padding: 0.5rem 0;
+    padding: 0.5rem 2rem 0.5rem 0;
 }
 nav form input:placeholder-shown{
     color: #40414C;
@@ -329,7 +329,7 @@ body{
     position: relative;
 }
 
-.fa-chevron-right{
+.carousel-right{
     font-family: "Font Awesome 5 Free"; font-weight: 900; 
     font-size: 3rem;
     content: "\f054";
@@ -341,7 +341,7 @@ body{
     z-index: 2;
     cursor: pointer;
 }
-.fa-chevron-left{
+.carousel-left{
     font-family: "Font Awesome 5 Free"; font-weight: 900; 
     font-size: 3rem;
     content: "\f053";
@@ -352,13 +352,17 @@ body{
     transform: translateY(-50%);
     cursor: pointer;
 }
-.fa-chevron-left:hover, .fa-chevron-right:hover{
+.carousel-left:hover, .carousel-right:hover{
     color: hsla(0, 0%, 100%, 0.8);
 }
 .carousel-overlay{
+    max-width: 1080px;
+    margin: 0 auto;
     height: 15rem;
     width: 100%;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     position: absolute;
     z-index: 2;
+    
 }
