@@ -14,15 +14,35 @@ function buildCharacter(data) {
     </div>
     <div class="other">
         <h2>Movies with ${name}</h2>
-        <div id="movies">none</div>
+        <div class="carousel-overlay">
+            <i class="fa-solid fa-chevron-left"></i>
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+        <div id="movies" class="carousel">none</div>
         <h2>Series with ${name}</h2>
-        <div id="series">none</div>
+        <div class="carousel-overlay">
+        <i class="fa-solid fa-chevron-left"></i>
+        <i class="fa-solid fa-chevron-right"></i>
+    </div>
+        <div id="series" class="carousel">none</div>
         <h2>Short films with ${name}</h2>
-        <div id="short-films">none</div>
+        <div class="carousel-overlay">
+        <i class="fa-solid fa-chevron-left"></i>
+        <i class="fa-solid fa-chevron-right"></i>
+    </div>
+        <div id="short-films" class="carousel">none</div>
         <h2>park attractions with ${name}</h2>
-        <div id="park">none</div>
+        <div class="carousel-overlay">
+        <i class="fa-solid fa-chevron-left"></i>
+        <i class="fa-solid fa-chevron-right"></i>
+    </div>
+        <div id="park" class="carousel">none</div>
         <h2>video games with ${name}</h2>
-        <div id="games">none</div>
+        <div class="carousel-overlay">
+        <i class="fa-solid fa-chevron-left"></i>
+        <i class="fa-solid fa-chevron-right"></i>
+    </div>
+        <div id="games" class="carousel">none</div>
     </div>
     `
     //removes loading screen
@@ -40,6 +60,8 @@ function buildCharacter(data) {
     mapData(data.shortFilms, shortFilm)
     mapData(data.parkAttractions, park)
     mapData(data.videoGames, games)
+
+    setupCarousel()
     
 }
 
@@ -54,6 +76,7 @@ function mapData(data, target) {
         })
     }
     if(data.length == 0 ){
+        target.previousElementSibling.remove();
         target.previousElementSibling.remove();
         target.remove()
     }
@@ -251,4 +274,31 @@ function previousePage(){
     let pageNumber = Number(document.getElementById('pageNumber').innerHTML);
     pageNumber--
     fetchPage(pageNumber)
+}
+
+//carousel
+function setupCarousel() {
+    console.log("setting up carousels");
+    const carousel = document.querySelectorAll(".carousel");
+
+    const left = document.querySelectorAll('.fa-chevron-left');
+    const right = document.querySelectorAll('.fa-chevron-right');
+
+    console.log(carousel);
+    let index = 0;
+    carousel.length
+    carousel.forEach(item => {
+        let containerDimension = item.getBoundingClientRect();
+        let containerWidth = containerDimension.width;
+
+        right[index].addEventListener('click', (e) => {
+            item.scrollLeft += containerWidth;
+        });
+        left[index].addEventListener('click', (e) => {
+            item.scrollLeft -= containerWidth;
+        });
+
+
+        index++
+    });
 }
