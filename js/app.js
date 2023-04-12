@@ -5,6 +5,7 @@ const app = document.getElementById('app')
 function buildCharacter(data) {
     //sort data into variables
     const name = data.name
+    console.log(data, "build character");
   
     //build view
     html = `
@@ -53,7 +54,9 @@ function buildCharacter(data) {
     const shortFilm = document.getElementById('short-films');
     const park = document.getElementById('park');
     const games = document.getElementById('games');
+    console.log(movie, series, shortFilm, park, games);
 
+    // console.log(data, "Before mapping");
     //input data into fields
     mapData(data.films, movie)
     mapData(data.tvShows, series)
@@ -66,16 +69,16 @@ function buildCharacter(data) {
 }
 
 function mapData(data, target) {
-
-    if(data.length > 0 ){
+    // console.log(data, "data being mapped");
+    if(data.length >= 1 ){
         target.innerHTML= ""
+        console.log(data);
         data.map((item) => {
             target.innerHTML += `
             <div class="item-box">${item}</div>
             `
         })
-    }
-    if(data.length == 0 ){
+    } else if(data.length == 0 ){
         target.previousElementSibling.remove();
         target.previousElementSibling.remove();
         target.remove()
@@ -110,9 +113,9 @@ async function onStart() {
     let api = "https://api.disneyapi.dev/character/4703"
     let response = await fetch(api);
     response = await response.json()
-
+    console.log(response, "on Start");
     //build view
-    buildCharacter(response)
+    buildCharacter(response.data)
 }
 
 onStart()
@@ -139,12 +142,14 @@ form.addEventListener("submit", (e) => {
 })
 
 //search with api
-async function search(api) {
+async function search(url) {
     //fetch api
-    let response = await fetch(api)
+    let response = await fetch(url)
     response = await response.json()
 
-    if(response.count > 1){
+    console.log(response, response.length);
+
+    if(response.info.count > 1){
         app.innerHTML = `
         <h1>Which one where you looking for?</h1>
         <div id="choices"></div>
@@ -152,6 +157,7 @@ async function search(api) {
         const choices = document.getElementById('choices')
         const people = response.data;
         people.map((person) => {
+            // console.log(person);
             choices.innerHTML += `
             <div class="person" data-url="${person.url}">
                 <img src="${person.imageUrl}">
@@ -163,15 +169,15 @@ async function search(api) {
         for(const index of person){
             index.addEventListener('click', (e) => {
                 const api = e.currentTarget.dataset.url;
+                console.log(api);
                 fetch(api)
                     .then(response => response.json())
                     .then(response => {
-                        console.log(response);
-                        buildCharacter(response)
+                        buildCharacter(response.item)
                     })
             })
         }
-    } else if(response.count == 1){
+    } else if(response.info.count == 1){
         console.log(response);
         buildCharacter(response.data[0])
     } else{
@@ -269,7 +275,7 @@ function fetchPage(pageNumber) {
                     fetch(api)
                         .then(response => response.json())
                         .then(response => {
-                            buildCharacter(response)
+                            buildCharacter(response.item)
                         })
                 })
             }
