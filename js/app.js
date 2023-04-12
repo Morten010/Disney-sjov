@@ -107,7 +107,7 @@ function buildLoadingScreen() {
 //when app starts
 async function onStart() {
     //fetch data
-    let api = "https://api.disneyapi.dev/characters/4703"
+    let api = "https://api.disneyapi.dev/character/4703"
     let response = await fetch(api);
     response = await response.json()
 
@@ -193,7 +193,7 @@ more.addEventListener('click', () => {
 
 //build page
 function fetchPage(pageNumber) {
-    fetch(`https://api.disneyapi.dev/characters/?page=${pageNumber}`)
+    fetch(`https://api.disneyapi.dev/character/?page=${pageNumber}`)
         .then(res => res.json())
         .then(res => {
             app.innerHTML = `
